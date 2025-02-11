@@ -1,0 +1,51 @@
+.back_wrap {
+    width: 100%;
+    min-height: 100.6vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.back {
+    position: absolute;
+    width: fit-content;
+    min-height: 100.6vh;
+    display: flex;
+    top: 0;
+    left: 32%;
+}
+
+.back_animation {
+    animation: shift_left 3s ease forwards;
+}
+
+.back_right {
+    width: 24vw;
+    min-height: 100.6vh;
+    border-bottom: 100vh solid transparent;
+    border-right: 32vw solid var(--foreground);
+}
+
+.back_left {
+    background-color: var(--foreground);
+    width: 100vw;
+    min-height: 100.6vh;
+}
+
+@keyframes shift_left {
+    0% {
+        left: 100%;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: 32%;
+    }
+}
+
+@media (max-width: 1199px) {
+    .back_wrap {
+        display: none;
+    }
+}

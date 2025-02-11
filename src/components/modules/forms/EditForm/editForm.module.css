@@ -1,0 +1,165 @@
+.form_wrap {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .8);
+    animation: show_form 1s ease forwards;
+}
+
+@keyframes show_form {0% {opacity: 0} 100%{opacity: 1}}
+
+.form {
+    position: relative;
+    height: fit-content;
+    width: 454px;
+}
+
+ .title {
+    line-height: 52px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-family: var(--sansDM);
+    font-weight: 500;
+}
+
+.input_wrap {
+    position: relative;
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.label {
+    line-height: 26px;
+    font-size: 20px;
+    font-family: var(--sansDM);
+    font-weight: 400;
+}
+
+.inp_wrap {
+    position: relative;
+}
+
+.inp {
+    width: 100%;
+    height: 64px;
+    padding: 0 20px;
+    border: 1px solid var(--light_gray);
+    border-radius: 20px;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+.inp::placeholder {
+    color: rgb(113, 120, 140);
+}
+
+.inp:focus {
+    background-color: transparent;
+    color: white;
+}
+
+.input_cover {
+    position: relative;
+}
+
+.eye {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.eye_line {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: var(--light_blue);
+    transform: rotate(-45deg);
+    top: 6px;
+}
+
+.text_small {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 20px 0;
+    font-size: 14px;
+    color: var(--light_gray);
+}
+
+.submit:hover {
+    filter: contrast(140%);
+} 
+
+.close {
+    position: absolute;
+    top: -30px;
+    right: -20px;
+    font-size: 24px;
+    color: var(--light_blue);
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+@media (max-width: 1199px) {
+    .form {
+        padding: 0 26px;
+        width: 360px;
+    }
+    
+    .title {
+        line-height: 26px;
+        text-align: left;
+        font-size: 1.375rem;
+        font-family: var(--sansPub);
+        font-weight: 100;
+    }
+    
+    .input_wrap {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .label {
+        line-height: 16px;
+        font-size: 12px;
+        font-family: var(--sansPub);
+        font-weight: 100;
+    }
+    
+    
+    .inp {
+        height: 38px;
+        padding: 0 14px;
+        border-radius: 19px;
+        font-size: 14px;
+    }
+    
+    .eye {
+        right: 14px;
+    }
+
+    .submit {
+        display: flex;
+        margin-top: 20px;
+        justify-content: center;
+    }
+    
+    .text_small {
+        display: none;
+    } 
+
+}
