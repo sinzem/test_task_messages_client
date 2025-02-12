@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from "react-simple-captcha";
 
 import styles from "./captcha.module.css";
@@ -22,6 +22,14 @@ const Captcha = ({
 
     const [userCaptcha, setUserCaptcha] = useState("");
     const [hideCaptcha, setHideCaptcha] = useState<boolean>(false);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus(); 
+        }
+    }, []);
 
     useEffect(() => {
         setIsValid(null);
@@ -72,6 +80,7 @@ const Captcha = ({
                 </div>
                 <div className={styles.input_cover}>
                     <InputBlock 
+                        inputRef={inputRef}
                         labelName="captcha"
                         labelText="Поле для ввода ответа"
                         id="captcha"

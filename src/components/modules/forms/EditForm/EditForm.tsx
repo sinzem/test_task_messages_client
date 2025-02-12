@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import styles from "./editForm.module.css";
@@ -37,6 +37,14 @@ const EditForm = ({
     const [errorConfirm, setErrorConfirm] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<"password" | "text">("password");
     const [success, setSuccess] = useState<boolean>(false);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus(); 
+        }
+    }, []);
 
     const hiddenPassword = (): void => {
         if (showPassword === "password") { 
@@ -101,6 +109,7 @@ const EditForm = ({
 
                 <div className={styles.input_cover}>
                     <InputBlock 
+                        inputRef={inputRef}
                         labelName="name"
                         labelText="Имя"
                         id="name"

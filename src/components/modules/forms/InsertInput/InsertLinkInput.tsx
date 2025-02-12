@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect, useRef } from "react";
 import * as sanitizeHtml from 'sanitize-html';
 
 import styles from "./insertInput.module.css";
@@ -17,15 +17,21 @@ const InsertInputLink = ({
     const [title, setTitle] = useState<string>("");
     const [text, setText] = useState<string>("");
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus(); 
+        }
+    }, []);
+
     function sanitizeText(str: string): string {
-    
         const checkMessage = sanitizeHtml(str, {
             allowedTags: ["i", "strong", "code", "a"],
             allowedAttributes: {
                 a: [ 'href', "title" ],
             },
         });
-    
         return checkMessage;
     }
 
@@ -49,6 +55,7 @@ const InsertInputLink = ({
                     <div className={styles.input_wrap}>
                         <label htmlFor="address">Адрес ссылки</label>
                         <input 
+                            ref={inputRef}
                             type="text"
                             name="address"
                             value={address}

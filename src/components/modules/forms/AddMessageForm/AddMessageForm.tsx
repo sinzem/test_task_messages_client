@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import * as sanitizeHtml from 'sanitize-html';
 
@@ -10,6 +10,7 @@ import ImageUploader from "@/components/submodules/ImageUploader/ImageUploader";
 import InsertInput from "@/components/modules/forms/InsertInput/InsertInput";
 import InsertInputLink from "@/components/modules/forms/InsertInput/InsertLinkInput";
 import { useMessageStore } from "@/libs/store/messageStore";
+import FullScreenMessage from "@/components/ui/popups/FullScreenMessage/FullScreenMessage";
 
 
 const AddMessageForm = ({
@@ -22,7 +23,7 @@ const AddMessageForm = ({
     action: React.Dispatch<React.SetStateAction<boolean>>
 }): ReactNode | Promise<ReactNode> => {
 
-    const {addMessage} = useMessageStore();
+    const {isError, addMessage} = useMessageStore();
 
     const [hideForm, setHideForm] = useState<boolean>(false);
     const [text, setText] = useState<string>("");
@@ -33,6 +34,16 @@ const AddMessageForm = ({
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [insertInput, setInsertInput] = useState<string | null>(null);
     const [insertInputValue, setInsertInputValue] = useState<string | null>(null);
+
+    const [successSend, setSuccessSend] = useState<boolean>(false);
+    
+    const areaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (areaRef.current) {
+            areaRef.current.focus(); 
+        }
+    }, [insertInput, imageForm, textForm]);
 
     useEffect(() => {
         if (imageFile) {
@@ -62,9 +73,7 @@ const AddMessageForm = ({
         if (e.target === e.currentTarget) {
             setHideForm(true);
             const timeout = setTimeout(() => {action(false)}, 500);
-            return () => {
-                clearTimeout(timeout);
-            }
+            return () => clearTimeout(timeout);
         }
     }
 
@@ -94,8 +103,22 @@ const AddMessageForm = ({
 
     async function sendMessage(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         e.preventDefault();
-        const result = await addMessage({role, parentMessageId, text, imageFile, textFile});
-        console.log(result);
+        await addMessage({role, parentMessageId, text, imageFile, textFile})
+            .then((createdMessage) => {
+                if(createdMessage) {
+                    setSuccessSend(true);
+                    const timeout1 = setTimeout(() => {
+                        setHideForm(true);
+                        setSuccessSend(false);
+                    }, 2000);
+                    const timeout2 = setTimeout(() => {action(false)}, 2500);
+                    return () => {
+                        clearTimeout(timeout1);
+                        clearTimeout(timeout2);
+                    };
+                }
+            });
+        
     }
 
 
@@ -143,6 +166,7 @@ const AddMessageForm = ({
                 <form className={styles.form}>
                     {/* <label htmlFor="area">Введите Ваше сообщение</label> */}
                     <textarea 
+                        ref={areaRef}
                         id="area" 
                         name="area" 
                         className={styles.area} 
@@ -200,6 +224,12 @@ const AddMessageForm = ({
                     closeAction={setInsertInput}
                     setAction={setInsertInputValue}
                 />
+            }
+            {isError &&
+                <FullScreenMessage text={isError}/>
+            }
+            {successSend &&
+                <FullScreenMessage text="Сообщение упешно отправлено" value="success"/>
             }
         </div>
     );

@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import * as sanitizeHtml from 'sanitize-html';
 
 import styles from "./insertInput.module.css";
@@ -15,7 +15,14 @@ const InsertInput = ({
     setAction: React.Dispatch<React.SetStateAction<string | null>> 
 }): ReactNode => {
 
-    const [value, setValue] = useState<string>("")
+    const [value, setValue] = useState<string>("");
+    const areaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (areaRef.current) {
+            areaRef.current.focus(); 
+        }
+    }, []);
 
     let name, labelText;
     if (sign === "code") {
@@ -61,6 +68,7 @@ const InsertInput = ({
                 <div className={styles.close} onClick={closeForm}>X</div>
                 <label htmlFor={name}>{labelText}</label>
                 <textarea 
+                    ref={areaRef}
                     className={styles.area}
                     id={name}
                     placeholder="Введите текст" 

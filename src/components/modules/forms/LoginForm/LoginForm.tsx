@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -36,6 +36,14 @@ const LoginForm = (): React.ReactNode => {
     
     const [captcha, setCaptcha] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean | null>(null);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus(); 
+        }
+    }, []);
 
     useEffect(() => {
         if (user && isAuth === "active") {
@@ -92,6 +100,7 @@ const LoginForm = (): React.ReactNode => {
 
             <div className={styles.input_cover}>
                 <InputBlock 
+                    inputRef={inputRef}
                     labelName="email"
                     labelText="E-mail"
                     id="email"

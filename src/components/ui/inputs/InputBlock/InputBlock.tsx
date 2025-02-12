@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import styles from "./inputBlock.module.css";
 
 const InputBlock = ({
+    inputRef,
     labelName, 
     labelText, 
     id, 
@@ -11,6 +12,7 @@ const InputBlock = ({
     setChange, 
     placeholder
 }: {
+    inputRef?: React.RefObject<HTMLInputElement | null>,
     labelName: string;
     labelText: string;
     id: string;
@@ -25,6 +27,7 @@ const InputBlock = ({
                 {labelText}
             </label>
             <input 
+                ref={inputRef}
                 className={styles.inp} 
                 id={id} 
                 type={type} 

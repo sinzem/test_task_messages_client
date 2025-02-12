@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import styles from "./registrationForm.module.css";
@@ -38,6 +38,14 @@ const RegistrationForm = ({link}: {link?: string | string[]}): React.ReactNode =
 
     const [captcha, setCaptcha] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean | null>(null);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus(); 
+        }
+    }, []);
 
     useEffect(() => {
         if(isAuth.length > 10) { 
@@ -109,6 +117,7 @@ const RegistrationForm = ({link}: {link?: string | string[]}): React.ReactNode =
 
             <div className={styles.input_cover}>
                 <InputBlock 
+                    inputRef={inputRef}
                     labelName="name"
                     labelText="Имя"
                     id="name"
@@ -137,7 +146,7 @@ const RegistrationForm = ({link}: {link?: string | string[]}): React.ReactNode =
                 />
                 {errorEmail && 
                     <LineMessage
-                        text="Невалидныый адрес электронной почты" 
+                        text="Невалидный адрес электронной почты" 
                         location="left" 
                     />
                 }
