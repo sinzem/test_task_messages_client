@@ -6,7 +6,6 @@ export interface IUser {
     role: string;
     photo?: string;
     createdAt: Date;
-    // messages: [];
 }
 
 export interface IUpdateUserDto {

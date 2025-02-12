@@ -17,7 +17,7 @@ const MessagesBlock = (): ReactNode => {
     return (
         <div className={styles.wrapper}>
             {showMessageForm &&
-                <AddMessageForm action={setShowMessageForm} />
+                <AddMessageForm action={setShowMessageForm} role="message" parentMessageId={null}/>
             }
             <MessagesBtnBlock setShowMessageForm={showForm} />
             <Messages/>

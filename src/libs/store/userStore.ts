@@ -39,22 +39,22 @@ export const useUserStore = create<UserState>((set) => ({
                 set(() => ({ user: response.data.user, isAuth: response.data.user?.activation }));
             } else if (response && response?.status === 200 && response.data.message) {
                 set(() => ({ isAuth: response.data.message }));
-                setTimeout(() => {set(() => ({ isAuth: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isAuth: '' }))}, 3000);
             } else {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore       
                 // eslint-disable-next-line no-unused-vars 
                 set(() => ({ isError: response.response.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
             }  
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 set(() => ({ isError: error.response?.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 throw error
               } else {
                 set(() => ({ isError: "Connection error, try later" }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 console.error("Connection error when logging into account:", error);
               }
         } finally {
@@ -74,16 +74,16 @@ export const useUserStore = create<UserState>((set) => ({
                 // @ts-ignore       
                 // eslint-disable-next-line no-unused-vars 
                 set(() => ({ isError: response.response.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
             }  
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 set(() => ({ isError: error.response?.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 throw error
               } else {
                 set(() => ({ isError: "Connection error, try later" }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 console.error("Connection error during registration:", error);
               }
         } finally {
@@ -103,16 +103,16 @@ export const useUserStore = create<UserState>((set) => ({
                 // @ts-ignore       
                 // eslint-disable-next-line no-unused-vars 
                 set(() => ({ isError: response.response.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
             }  
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 set(() => ({ isError: error.response?.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 throw error
               } else {
                 set(() => ({ isError: "Connection error, try later" }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 console.error("Connection error during registration:", error);
                 // throw new Error("Connection error during registration");
               }
@@ -133,16 +133,16 @@ export const useUserStore = create<UserState>((set) => ({
                 // @ts-ignore       
                 // eslint-disable-next-line no-unused-vars 
                 set(() => ({ isError: response.response.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
             } 
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 set(() => ({ isError: error.response?.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 throw error
               } else {
                 set(() => ({ isError: "Connection error, try later" }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 console.error("Connection error during registration:", error);
               }
         }
@@ -160,16 +160,16 @@ export const useUserStore = create<UserState>((set) => ({
                 // @ts-ignore       
                 // eslint-disable-next-line no-unused-vars 
                 set(() => ({ isError: response.response.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 6000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 set(() => ({ isError: error.response?.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 6000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 throw error
               } else {
                 set(() => ({ isError: "Connection error, try later" }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 6000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 console.error("Connection error while retrieving user data:", error)
                 throw new Error("Connection error while retrieving user data")
               }
@@ -190,16 +190,16 @@ export const useUserStore = create<UserState>((set) => ({
                 // @ts-ignore       
                 // eslint-disable-next-line no-unused-vars 
                 set(() => ({ isError: response.response.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
             }  
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 set(() => ({ isError: error.response?.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 throw error
               } else {
                 set(() => ({ isError: "Connection error, try later" }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 console.error("Connection error during registration:", error);
               }
         } finally {
@@ -219,16 +219,16 @@ export const useUserStore = create<UserState>((set) => ({
                 // @ts-ignore       
                 // eslint-disable-next-line no-unused-vars 
                 set(() => ({ isError: response.response.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
             }  
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 set(() => ({ isError: error.response?.data.message }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 throw error
               } else {
                 set(() => ({ isError: "Connection error, try later" }));
-                setTimeout(() => {set(() => ({ isError: '' }))}, 5000);
+                setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 // console.error("Connection error during registration:", error);
               }
         } finally {

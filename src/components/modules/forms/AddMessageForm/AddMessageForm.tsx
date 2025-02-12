@@ -9,13 +9,20 @@ import ActionButton from "@/components/ui/buttons/ActionButton/ActionButton";
 import ImageUploader from "@/components/submodules/ImageUploader/ImageUploader";
 import InsertInput from "@/components/ui/inputs/InsertInput/InsertInput";
 import InsertInputLink from "@/components/ui/inputs/InsertInput/InsertLinkInput";
+import { useMessageStore } from "@/libs/store/messageStore";
 
 
 const AddMessageForm = ({
+    role,
+    parentMessageId,
     action
 }: {
-    action: React.Dispatch<React.SetStateAction<boolean>>;
+    role: "message" | "comment",
+    parentMessageId: string | null,
+    action: React.Dispatch<React.SetStateAction<boolean>>
 }): ReactNode | Promise<ReactNode> => {
+
+    const {addMessage} = useMessageStore();
 
     const [hideForm, setHideForm] = useState<boolean>(false);
     const [text, setText] = useState<string>("");
@@ -83,6 +90,12 @@ const AddMessageForm = ({
             },
         });
         setText(checkMessage);
+    }
+
+    async function sendMessage(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
+        e.preventDefault();
+        const result = await addMessage({role, parentMessageId, text, imageFile, textFile});
+        console.log(result);
     }
 
 
@@ -171,7 +184,7 @@ const AddMessageForm = ({
                 </div>
                     
                     <div className={styles.send_button}>
-                        <ActionButton text="Отправить"/>
+                        <ActionButton text="Отправить" action={sendMessage}/>
                     </div>
                 </form>
             </div>
