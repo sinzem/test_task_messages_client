@@ -3,7 +3,7 @@ import * as sanitizeHtml from 'sanitize-html';
 
 import styles from "./insertInput.module.css";
 
-import ActionButton from "../../buttons/ActionButton/ActionButton";
+import ActionButton from "../../../ui/buttons/ActionButton/ActionButton";
 
 const InsertInputLink = ({
     closeAction,

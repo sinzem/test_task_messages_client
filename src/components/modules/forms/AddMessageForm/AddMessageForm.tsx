@@ -7,8 +7,8 @@ import textExample from "../../../../assets/pictures/txt_example.png";
 
 import ActionButton from "@/components/ui/buttons/ActionButton/ActionButton";
 import ImageUploader from "@/components/submodules/ImageUploader/ImageUploader";
-import InsertInput from "@/components/ui/inputs/InsertInput/InsertInput";
-import InsertInputLink from "@/components/ui/inputs/InsertInput/InsertLinkInput";
+import InsertInput from "@/components/modules/forms/InsertInput/InsertInput";
+import InsertInputLink from "@/components/modules/forms/InsertInput/InsertLinkInput";
 import { useMessageStore } from "@/libs/store/messageStore";
 
 
@@ -134,10 +134,10 @@ const AddMessageForm = ({
                 <div className={styles.inserts}>
                     <h3>Вставки:</h3>
                     <div className={styles.inserts_btns}>
-                        <div className={styles.insert_btn} data-sign="link" onClick={openInsertInput}>Ссылка</div>
-                        <div className={styles.insert_btn} data-sign="code" onClick={openInsertInput}>Код</div>
-                        <div className={styles.insert_btn} data-sign="italic" onClick={openInsertInput}>Курсив</div>
-                        <div className={styles.insert_btn} data-sign="strong" onClick={openInsertInput}>Жирный</div>
+                        <div tabIndex={0} className={styles.insert_btn} data-sign="link" onClick={openInsertInput}>Ссылка</div>
+                        <div tabIndex={0} className={styles.insert_btn} data-sign="code" onClick={openInsertInput}>Код</div>
+                        <div tabIndex={0} className={styles.insert_btn} data-sign="italic" onClick={openInsertInput}>Курсив</div>
+                        <div tabIndex={0} className={styles.insert_btn} data-sign="strong" onClick={openInsertInput}>Жирный</div>
                     </div>
                 </div>
                 <form className={styles.form}>

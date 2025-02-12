@@ -2,7 +2,7 @@
     position: fixed;
     bottom: 50px;
     left: 40px;
-    animation: show_spinner .5s ease forwards;
+    animation: show_spinner .2s ease forwards;
 }
 .spinner {
     width: 180px;
