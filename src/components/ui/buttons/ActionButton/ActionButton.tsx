@@ -11,7 +11,7 @@ const ActionButton = ({
 }: {
     text: string,
     theme?: string,
-    size?: "middle" | "big",
+    size?: "small" | "middle" | "big",
     action?: (e: React.MouseEvent<HTMLButtonElement>) => void,
     disabled?: boolean
 }): ReactNode | Promise<ReactNode> => {

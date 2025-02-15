@@ -5,6 +5,7 @@
 :root {
   --background: #1E1E1E;
   --foreground: #0E1218;
+  --ownerground: #1b3318;
   --textbright: #FFFFFF;
   --textdark: rgb(14, 18, 24);
   --textdim: rgb(225, 225, 225);
@@ -33,6 +34,7 @@ body {
   background: var(--background);
   font-family: var(--sansPub);
   position: relative;
+
 }
 
 textarea:-webkit-autofill,

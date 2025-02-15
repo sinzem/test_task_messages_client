@@ -1,7 +1,7 @@
 import axios, {type AxiosResponse} from "axios";
 
 import $api from "../http";
-import { IAddMessageDto, IMessage } from "../types/IMesssage";
+import { IAddMessageDto, IGetMessages, IMessage } from "../types/IMesssage";
 
 export default class MessageService {
 
@@ -29,4 +29,33 @@ export default class MessageService {
         }
     }
 
+    static async getMessages({ofset, limit, id}: IGetMessages): Promise<AxiosResponse<{messages: IMessage[]}>> {
+        let query = `?lim=${limit}&of=${ofset}`;
+        if (id) query += `&id=${id}`;
+        try {
+            return $api.get<{messages: IMessage[]}>(`/api/messages${query}`);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error("Axios error:", error.response?.data)
+                throw error
+            } else {
+                console.error("Error registration user:", error)
+                throw new Error("Error registration user")
+            }
+        }
+    }
+
+    static async deleteMessage(id: string): Promise<AxiosResponse<{message: string}>> {
+        try {
+            return $api.delete<{message: string}>(`/api/messages/${id}`);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error("Axios error:", error.response?.data)
+                throw error
+            } else {
+                console.error("Error registration user:", error)
+                throw new Error("Error registration user")
+            }
+        }
+    }
 }

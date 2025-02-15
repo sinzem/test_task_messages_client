@@ -18,7 +18,7 @@
     align-items: center;
     background-color: var(--foreground);
     border-radius: 0 0 0 24px;
-    animation: show_warning 5s ease forwards;
+    animation: show_warning 6s ease forwards;
 }
 @keyframes show_warning {
     0% {
@@ -91,6 +91,8 @@
     position: absolute;
     right: 20px;
     bottom: 20px;
+    display: flex;
+    gap: 20px;
 }
 
 .buttons {
@@ -101,6 +103,10 @@
     gap: 20px;
     grid-column: 2/3;
     grid-row: 1/2;
+}
+
+.logout_wrap {
+    position: relative;
 }
 
 @media (max-width: 1399px) {

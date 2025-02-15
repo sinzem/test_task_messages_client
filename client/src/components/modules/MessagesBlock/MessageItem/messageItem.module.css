@@ -1,0 +1,149 @@
+.wrapper {
+    width: 100%;
+    height: fit-content;
+    padding: 10px 20px 0;
+    border-radius: 12px;
+    border: 1px solid var(--light_gray);
+    color: var(--light_blue);
+}
+
+.top_panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.owner {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nickname {
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divider {
+    margin: 10px auto;
+    width: 98%;
+    height: 1px;
+    background-color: var(--light_gray);
+}
+
+.photoframe {
+    width: 60px;
+    height: 45px;
+    position: relative;
+    
+}
+
+.img {
+    object-fit: contain;
+    object-position: bottom left;
+}
+
+.message_panel {
+    display: flex;
+    gap: 20px;
+}
+
+.files {
+    display: flex;
+    gap: 20px;
+}
+
+.fileframe {
+    width: 60px;
+    height: 45px;
+    position: relative;
+    cursor: pointer;
+}
+
+.file {
+    object-fit: cover;
+    object-position: center;
+}
+
+.text {
+    display: flex;
+    align-items: end;
+    a {
+        color: var(--success_green);
+    }
+}
+
+.comments_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments_add {
+    font-size: 14px;
+}
+
+.comments_nav {
+    width: fit-content;
+    margin: 0 0 0 auto;
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.comments_btn {
+    width: 21px;
+    height: 21px;
+}
+.comments_show {
+    border-left: 10px solid transparent;
+    border-top: 21px solid var(--light_gray);
+    border-right: 10px solid transparent;
+    cursor: pointer;
+}
+.comments_hide {
+    border-left: 10px solid transparent;
+    border-bottom: 21px solid var(--light_gray);
+    border-right: 10px solid transparent;
+    cursor: pointer;
+}
+
+.big_divider {
+    margin: 10px auto 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--light_gray);
+    border-radius: 3px 3px 0 0; 
+}
+
+@media (max-width: 1199px) {
+    .top_panel {
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+    }
+    .message_panel {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .comments_top {
+        flex-direction: column;
+        align-items: start;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 536px) {
+    .wrapper {
+        padding: 10px 10px 0;
+    }
+}

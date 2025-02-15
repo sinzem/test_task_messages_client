@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #1E1E1E;
+  --foreground: #0E1218;
+  --textbright: #FFFFFF;
+  --textdark: rgb(14, 18, 24);
+  --textdim: rgb(225, 225, 225);
+  --light_blue: rgb(200, 221, 255);
+  --light_gray: rgb(113, 120, 140);
+  --warning_red: rgb(238, 58, 58);
+  --warning_red_light: rgb(255, 228, 227);
+  --success_green: rgb(113, 203, 163);
+  --success_green_light: rgb(209, 245, 228);
+
+  --sansPub: var(--sansPub), sans-serif;
+  --sansDM: var(--sansDM), sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1E1E1E;
+    --foreground: #0E1218;
+    --textbright: #FFFFFF;
+  }
+}
+
+body {
+  min-height: 100.06vh;
+  color: var(--textbright);
+  background: var(--background);
+  font-family: var(--sansPub);
+  position: relative;
+
+}
+
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  border: 1px solid var(--light_gray);
+  -webkit-text-fill-color: var(--textbright);
+  -webkit-box-shadow: 0 0 0px 1000px var(--background) inset; 
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+textarea {
+  min-height: 200px;
+  padding: 10px;
+  resize: vertical;
+  border: 1px solid var(--light_gray);
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+textarea::placeholder {
+  color: rgb(113, 120, 140);
+}
+

@@ -11,7 +11,7 @@
     background-color: rgba(0, 0, 0, .2);
     border-radius: 20px;
     z-index: 20;
-    animation: show_message 5s ease forwards;
+    animation: show_message 3s ease forwards;
 }
 
 .message {

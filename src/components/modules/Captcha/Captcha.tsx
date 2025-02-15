@@ -29,9 +29,12 @@ const Captcha = ({
         if (inputRef.current) {
             inputRef.current.focus(); 
         }
-    }, []);
+    }, [isValid]);
 
     useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus(); 
+        }
         setIsValid(null);
         const {length, back, front} = getValuesForCaptcha();
         loadCaptchaEnginge(length, back, front, "");
@@ -49,7 +52,7 @@ const Captcha = ({
                 const {length, back, front} = getValuesForCaptcha();
                 loadCaptchaEnginge(length, back, front, "");
                 setIsValid(null);
-            }, 5000);
+            }, 3000);
         }
     }
 

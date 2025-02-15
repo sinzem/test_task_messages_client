@@ -10,6 +10,8 @@ import { useUserStore } from "@/libs/store/userStore";
 import ActionButton from "@/components/ui/buttons/ActionButton/ActionButton";
 import EditForm from "../forms/EditForm/EditForm";
 import ChangePhotoForm from "../forms/ChangePhotoForm/ChangePhotoForm";
+import LineMessage from "@/components/ui/popups/LineMessage/LineMessage";
+import { redirect } from "next/navigation";
 
 
 const TopPanel = (): ReactNode => {
@@ -20,16 +22,40 @@ const TopPanel = (): ReactNode => {
     const [showEditForm, setShowEditForm] = useState<boolean>(false);
     const [photoForm, setPhotoForm] = useState<boolean>(false);
 
+    const [successLogout, setSuccessLogout] = useState<boolean>(false); 
+    const [errorLogout, setErrorLogout] = useState<boolean>(false); 
+
     useEffect(() => {
         setSetButtonDisabled(false);
     }, [])
+
+    useEffect(() => {
+        if (successLogout === true) {
+            redirect("/feed");
+        }
+    }, [successLogout])
 
     const click = (): void => {
         setSetButtonDisabled(!buttonDisabled);
     }
 
     const logOut = async (): Promise<void> => {
-        await logout();
+        await logout()
+            .then((res) => {
+                if (res === "Successful logout") {
+                    setSuccessLogout(true);
+                } else if (res !== "Successful logout") {
+                    console.log(res + " 1");
+                    setErrorLogout(true);
+                    const timeout = setTimeout(() => {setErrorLogout(false)}, 3000);
+                    return () => clearTimeout(timeout); 
+                }
+            })
+            .catch(() => {
+                setErrorLogout(true);
+                    const timeout = setTimeout(() => {setErrorLogout(false)}, 3000);
+                    return () => clearTimeout(timeout); 
+            });
     }
 
     const showEditBlock = (): void => {
@@ -89,7 +115,12 @@ const TopPanel = (): ReactNode => {
                     <Link href="/">
                         <ActionButton text="На главную" action={click} disabled={buttonDisabled}/>
                     </Link>
-                    <ActionButton text="Из аккаунта" action={logOut}/>
+                    <div className={styles.logout_wrap}>
+                        <ActionButton text="Из аккаунта" action={logOut}/>
+                        {errorLogout &&
+                            <LineMessage text="Ошибка выхода из аккаунта" location="right"/>
+                        }
+                    </div> 
                 </div>
             </div>
 

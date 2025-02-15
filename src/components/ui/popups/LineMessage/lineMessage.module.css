@@ -7,7 +7,7 @@
     border-radius: 16px;
     color: black; 
     z-index: 10;
-    animation: show_message 6s ease forwards;
+    animation: show_message 3s ease forwards;
 }
 
 .left {

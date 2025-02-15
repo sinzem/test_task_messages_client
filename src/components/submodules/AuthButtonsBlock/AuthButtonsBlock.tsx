@@ -28,6 +28,9 @@ const AuthButtonsBlock = (): ReactNode => {
                 <Link href="auth/login">
                     <AuthButton action={click} disabled={loading} text="Аккаунт"/>
                 </Link>
+                <Link href="/feed">
+                    <AuthButton action={click} disabled={loading} text="Сообщения"/>
+                </Link>
             </div>
         </div>
     );

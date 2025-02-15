@@ -18,7 +18,7 @@ interface UserState {
   login: ({email, password, forgottenPassword, saveData}: ILoginDto) => Promise<void>;
   registration: ({name, email, password, saveData}: IRegistrationDto) => Promise<void>;
   registrationAdmin: ({name, email, password, saveData}: IRegistrationDto) => Promise<void>;
-  logout: () => Promise<void>;
+  logout: () => Promise<string | undefined>;
   getUser: (id: string) => Promise<void>;
   updateUser: ({name, email, password}: IUpdateUserDto) => Promise<IUser | undefined>;
   addUserPhoto: (file: File) => Promise<IUser | undefined>;
@@ -128,6 +128,7 @@ export const useUserStore = create<UserState>((set) => ({
             const response = await AuthService.logout();
             if (response && response.status === 200 && response.data.message) {
                 set(() => ({ user: null, isAuth: "" }));
+                return response.data.message;
             } else {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore       
@@ -145,8 +146,9 @@ export const useUserStore = create<UserState>((set) => ({
                 setTimeout(() => {set(() => ({ isError: '' }))}, 3000);
                 console.error("Connection error during registration:", error);
               }
+        } finally {
+            set(() => ({isLoading: false}));
         }
-        set(() => ({isLoading: false}));
     },
     
     getUser: async (id) => {

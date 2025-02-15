@@ -11,6 +11,7 @@ const NoUserData = () => {
                 <div className={styles.not_user_wrap}>
                     <h2>SPA-приложение: Комментарии</h2>
                     <h2>Данные пользователя не найдены. Зарегистрируйтесь или войдите в аккаунт</h2> 
+                    
                     <Link href="/">
                         <ActionButton text="На главную" size="big" />
                     </Link>

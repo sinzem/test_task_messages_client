@@ -1,7 +1,7 @@
 .wrap {
     display: flex;
     flex-direction: column;
-    gap: 64px;
+    gap: 44px;
     animation: block_appear 4s ease forwards;
 }
 
@@ -25,7 +25,7 @@
     .wrap {
         justify-content: end;
         align-items: end;
-        gap: 40px;
+        gap: 30px;
     }
 
 }

@@ -128,7 +128,6 @@
         text-align: left;
         font-size: 1.375rem;
         font-family: var(--sansPub);
-        font-weight: 100;
     }
     
     .input_wrap {
@@ -143,7 +142,6 @@
         line-height: 16px;
         font-size: 12px;
         font-family: var(--sansPub);
-        font-weight: 100;
     }
     
     
