@@ -28,6 +28,10 @@
   }
 }
 
+html, body {
+  scroll-behavior: smooth;
+} 
+
 body {
   min-height: 100.06vh;
   color: var(--textbright);
@@ -37,6 +41,9 @@ body {
 
 }
 
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus,
@@ -60,5 +67,9 @@ textarea {
 
 textarea::placeholder {
   color: rgb(113, 120, 140);
+}
+
+select {
+  background-color: transparent;
 }
 

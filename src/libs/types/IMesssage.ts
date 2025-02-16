@@ -23,5 +23,12 @@ export interface IAddMessageDto {
 export interface IGetMessages {
     ofset: number;
     limit: number;
-    id?: string;
+    direction?: string;
+    entity?: string;
+    entityValue?: string; 
 }
+
+export type IDirection = "1" | "-1";
+
+export type ISearchEntity = "name" | "email" | "date";
+

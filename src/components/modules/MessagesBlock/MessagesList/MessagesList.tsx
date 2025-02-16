@@ -6,46 +6,58 @@ import { useMessageStore } from "@/libs/store/messageStore";
 import MessageItem from "../MessageItem/MessageItem";
 import { IMessage } from "@/libs/types/IMesssage";
 import { socket } from "@/libs/http/ws";
-
+// import { useUserStore } from "@/libs/store/userStore";
 
 
 const MessagesList = (): ReactNode | Promise<ReactNode> => {
 
-    const {limit, ofset, messages, getMessages, newMessage} = useMessageStore();
+    // const {user} = useUserStore();
+    const {limit, ofset, entityValue, setOfset,  messages, getMessages, newMessage} = useMessageStore();
+
     const [receivedMessage, setReceivedMessage] = useState<IMessage | null>(null);
     const [receivedComment, setReceivedComment] = useState<IMessage | null>(null);
     const [deletedMessage, setDeletedMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        getMessages({limit, ofset});
+        setOfset(0);
+        getMessages({limit, ofset: 0})
+        .then((res) => {
+            if (res && res.length) {
+                setOfset(0 + res.length)
+            }
+        });
     }, [])
 
     useEffect(() => {
+        if (ofset < 26 && !entityValue) {
 
-        const handleMessage = (message: IMessage): void => {
-            if (message.role === "message") {
-                setReceivedMessage(message);
-            } else if (message.role === "comment") {
-                setReceivedComment(message);
+            const handleMessage = (message: IMessage): void => {
+                if (message.role === "message") {
+                    setReceivedMessage(message);
+                } else if (message.role === "comment") {
+                    setReceivedComment(message);
+                }
             }
+
+            const handleDelete = (id: string): void => {
+                setDeletedMessage(id);
+            }
+
+            socket.on("message", handleMessage);
+            socket.on("delete", handleDelete);
+        
+            return () => {
+                socket.off("message", handleMessage);
+                socket.off("delete", handleDelete);
+                // socket.disconnect();
+            };
         }
 
-        const handleDelete = (id: string): void => {
-            setDeletedMessage(id);
-        }
-
-        socket.on("message", handleMessage);
-        socket.on("delete", handleDelete);
-    
-        return () => {
-            socket.off("message", handleMessage);
-            socket.off("delete", handleDelete);
-            socket.disconnect();
-        };
-    }, [])
+    }, [ofset, entityValue])
 
     useEffect(() => {
         if (receivedMessage) {
+            console.log(receivedMessage);
             const newMessages = messages ? [receivedMessage, ...messages] : [receivedMessage];
             newMessages.length = newMessages.length > 25 ? 25 : newMessages.length;
             newMessage(newMessages);

@@ -32,9 +32,9 @@ const Captcha = ({
     }, [isValid]);
 
     useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.focus(); 
-        }
+        // if (inputRef.current) {
+        //     inputRef.current.focus(); 
+        // }
         setIsValid(null);
         const {length, back, front} = getValuesForCaptcha();
         loadCaptchaEnginge(length, back, front, "");

@@ -29,9 +29,9 @@ export default class MessageService {
         }
     }
 
-    static async getMessages({ofset, limit, id}: IGetMessages): Promise<AxiosResponse<{messages: IMessage[]}>> {
-        let query = `?lim=${limit}&of=${ofset}`;
-        if (id) query += `&id=${id}`;
+    static async getMessages({ofset, limit, direction, entity, entityValue}: IGetMessages): Promise<AxiosResponse<{messages: IMessage[]}>> {
+        let query = `?&lim=${limit}&of=${ofset}`;
+        if (direction && entity && entityValue) query += `&dir=${direction}&en=${entity}&enval=${entityValue}`;
         try {
             return $api.get<{messages: IMessage[]}>(`/api/messages${query}`);
         } catch (error) {

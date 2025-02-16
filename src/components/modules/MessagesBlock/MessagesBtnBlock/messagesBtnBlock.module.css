@@ -1,14 +1,16 @@
 .wrapper {
-    width: 446px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
+.btn_wrap {
+    position: relative;
+}
+
 @media (max-width:1199px) {
     .wrapper {
-        width: 286px;
-
+        width: 320px;
     }
 
 }
