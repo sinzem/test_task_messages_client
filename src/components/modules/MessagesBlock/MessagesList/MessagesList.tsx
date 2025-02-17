@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./messagesList.module.css";
 
@@ -6,13 +6,24 @@ import { useMessageStore } from "@/libs/store/messageStore";
 import MessageItem from "../MessageItem/MessageItem";
 import { IMessage } from "@/libs/types/IMesssage";
 import { socket } from "@/libs/http/ws";
-// import { useUserStore } from "@/libs/store/userStore";
 
 
-const MessagesList = (): ReactNode | Promise<ReactNode> => {
+const MessagesList: React.FC = () => {
 
-    // const {user} = useUserStore();
-    const {limit, ofset, entityValue, setOfset,  messages, getMessages, newMessage} = useMessageStore();
+    const {
+        limit, 
+        ofset, 
+        entityValue, 
+        messages,
+        openCommentsCounter, 
+        setOfset, 
+        setEntityValue, 
+        setPrevBtnDisabled, 
+        setNextBtnDisabled, 
+        setOpenCommentsCounter,
+        getMessages, 
+        newMessage
+    } = useMessageStore();
 
     const [receivedMessage, setReceivedMessage] = useState<IMessage | null>(null);
     const [receivedComment, setReceivedComment] = useState<IMessage | null>(null);
@@ -20,47 +31,60 @@ const MessagesList = (): ReactNode | Promise<ReactNode> => {
 
     useEffect(() => {
         setOfset(0);
+        setEntityValue(null);
+        setPrevBtnDisabled(true);
+        setOpenCommentsCounter(0);
         getMessages({limit, ofset: 0})
         .then((res) => {
             if (res && res.length) {
-                setOfset(0 + res.length)
+                setOfset(0 + res.length);
+                if (res.length < limit) {
+                    setNextBtnDisabled(true);
+                } else {
+                    setNextBtnDisabled(false);
+                }
             }
         });
     }, [])
 
     useEffect(() => {
-        if (ofset < 26 && !entityValue) {
-
-            const handleMessage = (message: IMessage): void => {
-                if (message.role === "message") {
-                    setReceivedMessage(message);
-                } else if (message.role === "comment") {
-                    setReceivedComment(message);
-                }
-            }
-
-            const handleDelete = (id: string): void => {
-                setDeletedMessage(id);
-            }
-
-            socket.on("message", handleMessage);
-            socket.on("delete", handleDelete);
-        
-            return () => {
-                socket.off("message", handleMessage);
-                socket.off("delete", handleDelete);
-                // socket.disconnect();
-            };
-        }
-
-    }, [ofset, entityValue])
+        console.log(ofset);
+    }, [ofset])
 
     useEffect(() => {
-        if (receivedMessage) {
-            console.log(receivedMessage);
-            const newMessages = messages ? [receivedMessage, ...messages] : [receivedMessage];
-            newMessages.length = newMessages.length > 25 ? 25 : newMessages.length;
-            newMessage(newMessages);
+        const handleMessage = (message: IMessage): void => {
+            if (message.role === "message") {
+                setReceivedMessage(message);
+            } else if (message.role === "comment") {
+                setReceivedComment(message);
+            }
+        }
+
+        const handleDelete = (id: string): void => {
+            setDeletedMessage(id);
+        }
+
+        socket.on("message", handleMessage);
+        socket.on("delete", handleDelete);
+    
+        return () => {
+            socket.off("message", handleMessage);
+            socket.off("delete", handleDelete);
+            // socket.disconnect();
+            // socket.close();
+        };
+    }, [])
+
+    useEffect(() => {
+        if (receivedMessage && ofset < 26 && !entityValue) {
+            if (openCommentsCounter === 0) {
+                const newMessages = messages ? [receivedMessage, ...messages] : [receivedMessage];
+                newMessages.length = newMessages.length > 25 ? 25 : newMessages.length;
+                newMessage(newMessages);
+            } else {
+                const newMessages = messages ? [receivedMessage, ...messages] : [receivedMessage];
+                newMessage(newMessages);
+            }
         }
     }, [receivedMessage])
 
@@ -70,7 +94,7 @@ const MessagesList = (): ReactNode | Promise<ReactNode> => {
                 const newMessages = messages;
                 newMessages.forEach((i, j, arr) => {
                     if (i._id === receivedComment.parentMessageId) {
-                        i.comments = [receivedComment.parentMessageId, ...i.comments]
+                        i.comments = [receivedComment._id, ...i.comments]
                         newMessage(arr);
                     }
                 })
@@ -82,10 +106,17 @@ const MessagesList = (): ReactNode | Promise<ReactNode> => {
         if (messages && messages.length) {
             const newMessages = messages;
             newMessages.forEach((i, j, arr) => {
+                if (deletedMessage && i.comments.includes(deletedMessage)) {
+                    const index = i.comments.findIndex(index => index === deletedMessage);
+                    if (index !== -1) {
+                        i.comments.splice(index, 1);
+                    }
+                }
                 if (i._id === deletedMessage) {
                     arr.splice(j, 1);
-                    newMessage(arr);
+                    j = j - 1;
                 }
+                newMessage(arr);
             })
         }
     }, [deletedMessage])

@@ -1,0 +1,24 @@
+.wrapper {
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    animation: show_comments .2s ease forwards;
+}
+
+@keyframes show_comments {0%{height: 0} 100%{height: fit-content}}
+
+.close_block {
+    margin: 10px 20px 0 auto;
+    display: flex;
+    gap: 10px;
+    align-items: end;
+    width: fit-content;
+    cursor: pointer;
+}
+.triangle {
+    width: 21px;
+    height: 21px;
+    border-left: 10px solid transparent;
+    border-bottom: 21px solid var(--light_gray);
+    border-right: 10px solid transparent;
+}

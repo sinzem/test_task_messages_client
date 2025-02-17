@@ -110,6 +110,12 @@
     align-items: center;
 }
 
+.comments_bottom {
+    margin: 10px -20px 0 0;
+    background-color: #0051ff1c;
+    border-radius: 12px;
+}
+
 .comments_add {
     font-size: 14px;
 }
@@ -177,5 +183,8 @@
 @media (max-width: 536px) {
     .wrapper {
         padding: 10px 10px 0;
+    }
+    .comments_bottom {
+        margin: 10px -10px 0 0;
     }
 }

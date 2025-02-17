@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 import styles from "./messageItem.module.css";
@@ -13,11 +13,14 @@ import { IMessage } from "@/libs/types/IMesssage";
 import { useUserStore } from "@/libs/store/userStore";
 import LineMessage from "@/components/ui/popups/LineMessage/LineMessage";
 import MessageService from "@/libs/services/MessageService";
+import CommentsBlock from "../CommentsBlock/CommentsBlock";
+import { useMessageStore } from "@/libs/store/messageStore";
 
 
-const MessageItem = ({message}: {message: IMessage}): ReactNode => {
+const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
 
     const {user} = useUserStore();
+    const {openCommentsCounter, setOpenCommentsCounter} = useMessageStore();
 
     const [showImageFile, setShowImageFile] = useState<boolean>(false); 
     const [showTextFile, setShowTextFile] = useState<boolean>(false); 
@@ -26,6 +29,8 @@ const MessageItem = ({message}: {message: IMessage}): ReactNode => {
     const [showErrorDelComment, setShowErrorDelComment] = useState<boolean>(false);
 
     const [showCommentForm, setShowCommentForm] = useState<boolean>(false);
+    const [showCommentsBlock, setShowCommentsBlock] = useState<boolean>(false);
+    const [comments, setComments] = useState<IMessage[] | null>(null);
 
     function showImage() {
         setShowImageFile(true);
@@ -70,6 +75,22 @@ const MessageItem = ({message}: {message: IMessage}): ReactNode => {
             const timeout = setTimeout(() => {setShowWarningDelComment(false)}, 3000);
             return () => clearTimeout(timeout);
         }
+    }
+
+    const openCommentsWindow = async () => {
+        await MessageService.getComments(message._id)
+            .then((res) => {
+                if (res.status === 200) {
+                    setComments(res.data.comments);
+                    setShowCommentsBlock(true);
+                    setOpenCommentsCounter(openCommentsCounter + 1);
+                }
+            });
+    }
+
+    const closeCommentsWindow = () => {
+        setShowCommentsBlock(false);
+        setOpenCommentsCounter(openCommentsCounter - 1);
     }
 
     return (
@@ -168,22 +189,34 @@ const MessageItem = ({message}: {message: IMessage}): ReactNode => {
                             <LineMessage text="Только для авторизованных пользователей"/>
                         }
                     </div>
+
                     <div className={styles.comments_nav}>
-                        <div className={
-                            message.comments.length 
-                            ? `${styles.comments_show} ${styles.comments_btn}` 
-                            : styles.comments_btn
-                        }></div>
+                        <div 
+                            className={
+                                message.comments.length 
+                                ? `${styles.comments_show} ${styles.comments_btn}` 
+                                : styles.comments_btn
+                            }
+                            onClick={openCommentsWindow}
+                        ></div>
 
                         <div>Комментарии: {message.comments.length}</div>
 
-                        <div className={
-                            message.comments.length 
-                            ? `${styles.comments_hide} ${styles.comments_btn}` 
-                            : styles.comments_btn
-                        }></div>
+                        <div 
+                            className={
+                                message.comments.length 
+                                ? `${styles.comments_hide} ${styles.comments_btn}` 
+                                : styles.comments_btn
+                            }
+                            onClick={closeCommentsWindow}
+                        ></div>
                     </div>
                 </div>
+            </div>
+            <div className={styles.comments_bottom}>
+                {showCommentsBlock && comments &&
+                    <CommentsBlock comments={comments} action={closeCommentsWindow}/>
+                }
             </div>
             <div className={styles.big_divider}></div>
         </div>

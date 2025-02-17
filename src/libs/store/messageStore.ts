@@ -10,10 +10,11 @@ interface MessageState {
     direction:  IDirection;
     entity: ISearchEntity;
     entityValue: string | null;
-    minLength: boolean;
-    maxLength: boolean;
+    prevBtnDisabled: boolean;
+    nextBtnDisabled: boolean;
     message: IMessage | null;
     messages: IMessage[] | null;
+    openCommentsCounter: number;
     isError: string | null;
     isGetMessagesError: string | null,
     isLoading: boolean;
@@ -21,7 +22,10 @@ interface MessageState {
     setOfset: (value: number) => void;
     setDirection: (value: IDirection) => void;
     setEntity: (value: ISearchEntity) => void; 
-    setEntityValue: (value: string) => void;
+    setEntityValue: (value: string | null) => void;
+    setPrevBtnDisabled: (value: boolean) => void;
+    setNextBtnDisabled: (value: boolean) => void;
+    setOpenCommentsCounter: (value: number) => void;
     addMessage: ({role, text, parentMessageId, imageFile, textFile}: IAddMessageDto) => Promise<IMessage | undefined>;
     newMessage: (newMessages: IMessage[]) => void;
     getMessages: ({ofset, limit, direction, entity, entityValue}: IGetMessages) => Promise<IMessage[] | undefined>;
@@ -33,10 +37,11 @@ export const useMessageStore = create<MessageState>((set) => ({
     direction: "-1",
     entity: "name",
     entityValue: null,
-    minLength: true,
-    maxLength: false,
+    prevBtnDisabled: false,
+    nextBtnDisabled: false,
     message: null,
     messages: null,
+    openCommentsCounter: 0,
     isError: null,
     isGetMessagesError: null,
     isLoading: false,
@@ -57,8 +62,20 @@ export const useMessageStore = create<MessageState>((set) => ({
         set(() => ({entity: value}));
     },
 
-    setEntityValue: (value: string) => {
+    setEntityValue: (value: string | null) => {
         set(() => ({entityValue: value}));
+    },
+
+    setPrevBtnDisabled: (value: boolean) => {
+        set(() => ({prevBtnDisabled: value}));
+    },
+
+    setNextBtnDisabled: (value: boolean) => {
+        set(() => ({nextBtnDisabled: value}));
+    },
+
+    setOpenCommentsCounter: (value: number) => {
+        set(() => ({openCommentsCounter: value}));
     },
 
     addMessage: async ({role, text, parentMessageId, imageFile, textFile}) => {

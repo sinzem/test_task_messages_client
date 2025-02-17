@@ -58,4 +58,18 @@ export default class MessageService {
             }
         }
     }
+
+    static async getComments(id: string): Promise<AxiosResponse<{comments: IMessage[]}>> {
+        try {
+            return $api.get<{comments: IMessage[]}>(`/api/messages/comments/${id}`);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error("Axios error:", error.response?.data)
+                throw error
+            } else {
+                console.error("Error registration user:", error)
+                throw new Error("Error registration user")
+            }
+        }
+    }
 }
