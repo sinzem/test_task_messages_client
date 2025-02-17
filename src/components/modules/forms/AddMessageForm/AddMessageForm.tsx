@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import * as sanitizeHtml from 'sanitize-html';
 
@@ -21,7 +21,7 @@ const AddMessageForm = ({
     role: "message" | "comment",
     parentMessageId: string | null,
     action: React.Dispatch<React.SetStateAction<boolean>>
-}): ReactNode | Promise<ReactNode> => {
+}): ReactElement => {
 
     const {isError, addMessage} = useMessageStore();
 
@@ -69,7 +69,7 @@ const AddMessageForm = ({
     }, [insertInputValue]);
 
 
-    const closeForm = (e: React.MouseEvent<HTMLDivElement>) => {
+    const closeForm = (e: React.MouseEvent<HTMLDivElement>): void | (() => void) => {
         if (e.target === e.currentTarget) {
             setHideForm(true);
             const timeout = setTimeout(() => {action(false)}, 500);
@@ -164,7 +164,6 @@ const AddMessageForm = ({
                     </div>
                 </div>
                 <form className={styles.form}>
-                    {/* <label htmlFor="area">Введите Ваше сообщение</label> */}
                     <textarea 
                         ref={areaRef}
                         id="area" 

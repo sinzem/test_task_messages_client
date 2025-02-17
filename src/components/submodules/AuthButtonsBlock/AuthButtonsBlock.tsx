@@ -1,13 +1,13 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 
 import styles from "./authButtonsBlock.module.css";
 
 import AuthButton from "../../ui/buttons/AuthButton/AuthButton";
 
-const AuthButtonsBlock = (): ReactNode => {
+const AuthButtonsBlock = (): ReactElement => {
 
     const [loading, setLoading] = useState(false);
 
@@ -15,7 +15,7 @@ const AuthButtonsBlock = (): ReactNode => {
         setLoading(false);
     }, [])
 
-    const click = () => {
+    const click = (): void => {
         setLoading(!loading);
     }
 

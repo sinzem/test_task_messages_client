@@ -1,11 +1,11 @@
-import React from 'react';
+import { ReactElement } from 'react';
 import Link from 'next/link';
 
 import styles from "./noUserData.module.css";
 
 import ActionButton from '@/components/ui/buttons/ActionButton/ActionButton';
 
-const NoUserData = () => {
+const NoUserData = (): ReactElement => {
     return (
         <div className={styles.page_wrapper}>
                 <div className={styles.not_user_wrap}>

@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react";
-import { useState, useRef, type DragEvent, ReactNode, useEffect } from "react";
+import { useState, useRef, type DragEvent, useEffect, ReactElement } from "react";
 import Image from "next/image";
 import Compressor from "compressorjs";
 
@@ -23,7 +23,7 @@ const ImageUploader = ({
     title: string,
     subtitle: string,
     setFile: React.Dispatch<React.SetStateAction<File | null>>;
-}): ReactNode => {
+}): ReactElement => {
 
     const { isError } = useUserStore();
  
@@ -41,7 +41,7 @@ const ImageUploader = ({
         }
     }, [error, isError])
 
-    const handleDrag = (e: DragEvent<HTMLDivElement>) => {
+    const handleDrag = (e: DragEvent<HTMLDivElement>): void => {
         e.preventDefault();
         e.stopPropagation();
         if (e.type === "dragenter" || e.type === "dragover") {
@@ -51,7 +51,7 @@ const ImageUploader = ({
         }
     }
 
-    const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    const handleDrop = (e: DragEvent<HTMLDivElement>): void => {
         e.preventDefault()
         e.stopPropagation()
         setDragActive(false)
@@ -60,14 +60,14 @@ const ImageUploader = ({
         }
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         e.preventDefault()
         if (e.target.files && e.target.files[0]) {
             handleFiles(e.target.files)
         }
     }
 
-    const handleFiles = (files: FileList) => {
+    const handleFiles = (files: FileList): void => {
         const file = files[0];
         const format = file.name.split(".").at(-1);
         const permitFormat = String(process.env.NEXT_PUBLIC_IMG_FORMAT).split(",");
@@ -108,7 +108,7 @@ const ImageUploader = ({
     
     }
 
-    const onButtonClick = () => {
+    const onButtonClick = (): void => {
         inputRef.current?.click()
     }
 
@@ -145,7 +145,7 @@ const ImageUploader = ({
 
 export default ImageUploader
 
-const timeoutClean = (setter: React.Dispatch<React.SetStateAction<string | null>>) => {
+const timeoutClean = (setter: React.Dispatch<React.SetStateAction<string | null>>): (() => void) => {
     const timeout = setTimeout(() => {setter(null)}, 3000);
     return () => clearTimeout(timeout);
 }

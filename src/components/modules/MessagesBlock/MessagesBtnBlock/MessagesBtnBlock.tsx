@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
 import styles from "./messagesBtnBlock.module.css";
 import ActionButton from "@/components/ui/buttons/ActionButton/ActionButton";
@@ -11,7 +11,7 @@ const MessagesBtnBlock = ({
     setShowMessageForm
 }: {
     setShowMessageForm: React.Dispatch<React.SetStateAction<boolean>>
-}): React.JSX.Element => {
+}): ReactElement => {
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [windowHeight, setWindowHeight] = useState<number>(0);
@@ -48,7 +48,7 @@ const MessagesBtnBlock = ({
         }
     }, [])
 
-    const setNewMessageForm = () => {
+    const setNewMessageForm = (): (() => void) | void => {
         if (user && user.activation) {
             setShowMessageForm(true);
         } else {

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React from "react";
 import Link from "next/link";
 
 import styles from "./notFoundPage.module.css";
@@ -6,7 +6,7 @@ import styles from "./notFoundPage.module.css";
 import BackPanel from "@/components/submodules/BackPanel/BackPanel";
 import ActionButton from "@/components/ui/buttons/ActionButton/ActionButton";
 
-export default function NotFoundPage(): ReactNode {
+const NotFoundPage: React.FC = () => {
     return (
         <div className={styles.wrap}>
             <BackPanel action={true} />
@@ -19,3 +19,5 @@ export default function NotFoundPage(): ReactNode {
         </div>
     )
 }
+
+export default  NotFoundPage;

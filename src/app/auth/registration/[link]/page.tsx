@@ -1,6 +1,5 @@
 "use client";
 
-import { ReactNode } from "react";
 import { redirect, useParams } from "next/navigation";
 
 import styles from "./registrationAdminPage.module.css";
@@ -8,7 +7,7 @@ import styles from "./registrationAdminPage.module.css";
 import RegistrationForm from "@/components/modules/forms/RegistrationForm/RegistrationForm";
 
 
-const RegistrationAdminPage = (): ReactNode => {
+const RegistrationAdminPage: React.FC = () => {
 
     const params = useParams();
     const id = params?.link;

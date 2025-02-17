@@ -1,13 +1,13 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactElement, useState } from "react";
 import Link from "next/link";
 
 import styles from "./topPanel.module.css";
 
 import ActionButton from "@/components/ui/buttons/ActionButton/ActionButton";
 
-const TopPanelEmpty = (): ReactNode => {
+const TopPanelEmpty = (): ReactElement => {
 
     const [buttonDisabled, setSetButtonDisabled] = useState<boolean>(false);
   

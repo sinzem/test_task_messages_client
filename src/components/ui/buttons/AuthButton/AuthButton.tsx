@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 
 import styles from "./authButton.module.css";
 
@@ -10,7 +10,7 @@ const AuthButton = ({
     text: string, 
     disabled?: boolean,
     action?: (e: React.MouseEvent<HTMLButtonElement>) => void,
-}): ReactNode | Promise<ReactNode> => {
+}): ReactElement => {
     return (
             <button 
                 type="submit" 

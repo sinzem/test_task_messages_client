@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactElement } from "react";
 import * as sanitizeHtml from 'sanitize-html';
 
 import styles from "./insertInput.module.css";
@@ -11,7 +11,7 @@ const InsertInputLink = ({
 }: {
     closeAction: React.Dispatch<React.SetStateAction<string | null>>,
     setAction: React.Dispatch<React.SetStateAction<string | null>> 
-}): ReactNode => {
+}): ReactElement => {
 
     const [address, setAddress] = useState<string>("");
     const [title, setTitle] = useState<string>("");

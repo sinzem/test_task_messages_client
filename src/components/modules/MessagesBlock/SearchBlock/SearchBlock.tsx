@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import styles from "./searchBlock.module.css";
@@ -10,13 +10,14 @@ import { useMessageStore } from '@/libs/store/messageStore';
 import { useUserStore } from '@/libs/store/userStore';
 import { checkEmail } from '@/libs/services/checkers';
 
-const SearchBlock: React.FC = () => {
+const SearchBlock = (): ReactElement => {
 
     const {user} = useUserStore();
     const {
         limit,
         direction, 
         entity, 
+        isGetMessagesError,
         setEntity, 
         setEntityValue, 
         setDirection,
@@ -25,7 +26,6 @@ const SearchBlock: React.FC = () => {
         setOfset, 
         getMessages, 
         setOpenCommentsCounter,
-        isGetMessagesError
     } = useMessageStore();
 
     const [searchInputValue, setSearchInputValue] = useState<string>(""); 

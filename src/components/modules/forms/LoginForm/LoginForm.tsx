@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -22,7 +22,7 @@ import {
 import Captcha from "../../Captcha/Captcha";
 
 
-const LoginForm = (): React.ReactNode => {
+const LoginForm = (): ReactElement => {
 
     const { user, isAuth, isLoading, isError, login } = useUserStore();
 
@@ -53,14 +53,12 @@ const LoginForm = (): React.ReactNode => {
 
     useEffect(() => {
         if (isValid) {
-            setTimeout(() => {
-                setCaptcha(false);
-            }, 1000);
+            setTimeout(() => {setCaptcha(false)}, 1000);
             login({email, password, forgottenPassword, saveData});
         }
     }, [isValid])
 
-    const showPassword = () => {
+    const showPassword = (): void => {
         if (show === "password") { 
             setShow("text");
         } else { 
@@ -68,20 +66,20 @@ const LoginForm = (): React.ReactNode => {
         }
     }
 
-    const sendData = async (e: React.FormEvent<HTMLFormElement> ): Promise<void> => {
+    const sendData = async (e: React.FormEvent<HTMLFormElement>): Promise<(() => void) | undefined> => {
         e.preventDefault();
         const validateEmail = checkEmail(email);
         if (!validateEmail) {
             setErrorEmail(true);
-            setTimeout(() => setErrorEmail(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorEmail(false), 3000)
+            return () => clearTimeout(timeout); 
         }
         if (!forgottenPassword) {
             const validatePassword = checkPasswordLength(password);
             if (!validatePassword) {
                 setErrorPassword(true);
-                setTimeout(() => setErrorPassword(false), 5000)
-                return; 
+                const timeout = setTimeout(() => setErrorEmail(false), 3000)
+                return () => clearTimeout(timeout); 
             }
         }
         setCaptcha(true);

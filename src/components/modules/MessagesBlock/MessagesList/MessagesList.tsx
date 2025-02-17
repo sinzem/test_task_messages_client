@@ -1,32 +1,35 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
 import styles from "./messagesList.module.css";
 
-import { useMessageStore } from "@/libs/store/messageStore";
 import MessageItem from "../MessageItem/MessageItem";
+import { useMessageStore } from "@/libs/store/messageStore";
 import { IMessage } from "@/libs/types/IMesssage";
 import { socket } from "@/libs/http/ws";
 
 
-const MessagesList: React.FC = () => {
+const MessagesList = (): ReactElement => {
 
     const {
         limit, 
         ofset, 
         entityValue, 
         messages,
-        openCommentsCounter, 
+        openCommentsCounter,
+        cacheNewMessages,
+        cacheDeletedMessages, 
         setOfset, 
         setEntityValue, 
         setPrevBtnDisabled, 
         setNextBtnDisabled, 
         setOpenCommentsCounter,
         getMessages, 
-        newMessage
+        newMessage,
+        setCacheNewMessages,
+        setCacheDeletedMessages
     } = useMessageStore();
 
     const [receivedMessage, setReceivedMessage] = useState<IMessage | null>(null);
-    const [receivedComment, setReceivedComment] = useState<IMessage | null>(null);
     const [deletedMessage, setDeletedMessage] = useState<string | null>(null);
 
     useEffect(() => {
@@ -53,11 +56,7 @@ const MessagesList: React.FC = () => {
 
     useEffect(() => {
         const handleMessage = (message: IMessage): void => {
-            if (message.role === "message") {
-                setReceivedMessage(message);
-            } else if (message.role === "comment") {
-                setReceivedComment(message);
-            }
+            setReceivedMessage(message);
         }
 
         const handleDelete = (id: string): void => {
@@ -76,7 +75,7 @@ const MessagesList: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        if (receivedMessage && ofset < 26 && !entityValue) {
+        if (receivedMessage && ofset < 26 && !entityValue && receivedMessage.role === "message") {
             if (openCommentsCounter === 0) {
                 const newMessages = messages ? [receivedMessage, ...messages] : [receivedMessage];
                 newMessages.length = newMessages.length > 25 ? 25 : newMessages.length;
@@ -86,38 +85,33 @@ const MessagesList: React.FC = () => {
                 newMessage(newMessages);
             }
         }
-    }, [receivedMessage])
-
-    useEffect(() => {
-        if (receivedComment) {
-            if (messages && messages.length) {
-                const newMessages = messages;
-                newMessages.forEach((i, j, arr) => {
-                    if (i._id === receivedComment.parentMessageId) {
-                        i.comments = [receivedComment._id, ...i.comments]
-                        newMessage(arr);
-                    }
-                })
-            }
+        if (receivedMessage) {
+            setCacheNewMessages([...cacheNewMessages, receivedMessage]);
+            const timeout = setTimeout(() => {
+                const array = cacheNewMessages.filter(mess => mess !== receivedMessage);
+                setCacheNewMessages(array);
+            }, 3000);
+            return () => clearTimeout(timeout);
         }
-    }, [receivedComment])
+    }, [receivedMessage])
 
     useEffect(() => {
         if (messages && messages.length) {
             const newMessages = messages;
             newMessages.forEach((i, j, arr) => {
-                if (deletedMessage && i.comments.includes(deletedMessage)) {
-                    const index = i.comments.findIndex(index => index === deletedMessage);
-                    if (index !== -1) {
-                        i.comments.splice(index, 1);
-                    }
-                }
                 if (i._id === deletedMessage) {
                     arr.splice(j, 1);
-                    j = j - 1;
                 }
                 newMessage(arr);
             })
+        }
+        if (deletedMessage) {
+            setCacheDeletedMessages([...cacheDeletedMessages, deletedMessage]);
+            const timeout = setTimeout(() => {
+                const array = cacheDeletedMessages.filter(mess => mess !== deletedMessage);
+                setCacheDeletedMessages(array);
+            }, 3000);
+            return () => clearTimeout(timeout);
         }
     }, [deletedMessage])
 

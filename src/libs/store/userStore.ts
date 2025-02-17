@@ -3,8 +3,6 @@ import axios from "axios";
 
 import { IUpdateUserDto, IUser } from "../types/IUser";
 import AuthService from "../services/AuthService";
-// import { AuthResponse } from "../models/response/AuthResponse";
-// import { API_URL } from "../http";
 import { ILoginDto } from "../types/authorization/loginModels";
 import UserService from "../services/UserService";
 import { IRegistrationDto } from "../types/authorization/registrationModels";

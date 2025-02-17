@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles/app.module.css";
 import AuthButtonsBlock from "@/components/submodules/AuthButtonsBlock/AuthButtonsBlock";
 
-export default async function Home() {
+const Home: React.FC = () => {
  
     return (
         <main className={styles.main}>
@@ -15,3 +15,5 @@ export default async function Home() {
         </main>
     );
 }
+
+export default Home;

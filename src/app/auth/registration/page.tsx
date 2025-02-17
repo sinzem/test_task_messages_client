@@ -1,11 +1,9 @@
-import { ReactNode } from "react";
-
 import styles from "./registrationPage.module.css";
 
 import RegistrationForm from "@/components/modules/forms/RegistrationForm/RegistrationForm";
 
 
-const RegistrationPage = (): ReactNode => {
+const RegistrationPage: React.FC = () => {
  
   return (
     <div className={styles.main}>

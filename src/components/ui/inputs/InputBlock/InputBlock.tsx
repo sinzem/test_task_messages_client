@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 
 import styles from "./inputBlock.module.css";
 
@@ -20,7 +20,7 @@ const InputBlock = ({
     value: string;
     setChange: React.Dispatch<React.SetStateAction<string>>;
     placeholder: string;
-}): ReactNode => {
+}): ReactElement => {
     return (
         <div className={styles.input_wrap}>
             <label className={styles.label} htmlFor={labelName}>    

@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useEffect} from "react";
+import { useEffect} from "react";
 import { useParams } from "next/navigation";
 
 import styles from "./user.module.css";
@@ -9,7 +9,7 @@ import { useUserStore } from "@/libs/store/userStore";
 import TopPanel from "@/components/modules/TopPanel/TopPanel";
 import MessagesBlock from "@/components/modules/MessagesBlock/MessagesBlock";
 
-export default function UserPage(): ReactNode {
+const UserPage: React.FC = () => {
 
     const params = useParams();
     const id = params?.id;
@@ -31,7 +31,7 @@ export default function UserPage(): ReactNode {
     )
 }
 
-
+export default UserPage;
 
 
 

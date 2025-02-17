@@ -1,8 +1,9 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 import styles from "./topPanel.module.css";
 
@@ -11,10 +12,9 @@ import ActionButton from "@/components/ui/buttons/ActionButton/ActionButton";
 import EditForm from "../forms/EditForm/EditForm";
 import ChangePhotoForm from "../forms/ChangePhotoForm/ChangePhotoForm";
 import LineMessage from "@/components/ui/popups/LineMessage/LineMessage";
-import { redirect } from "next/navigation";
 
 
-const TopPanel = (): ReactNode => {
+const TopPanel = (): ReactElement => {
   
     const {user, logout} = useUserStore();
 
@@ -45,7 +45,6 @@ const TopPanel = (): ReactNode => {
                 if (res === "Successful logout") {
                     setSuccessLogout(true);
                 } else if (res !== "Successful logout") {
-                    console.log(res + " 1");
                     setErrorLogout(true);
                     const timeout = setTimeout(() => {setErrorLogout(false)}, 3000);
                     return () => clearTimeout(timeout); 

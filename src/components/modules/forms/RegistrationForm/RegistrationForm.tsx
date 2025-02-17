@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import styles from "./registrationForm.module.css";
@@ -21,7 +21,7 @@ import {
 import Captcha from "../../Captcha/Captcha";
 
 
-const RegistrationForm = ({link}: {link?: string | string[]}): React.ReactNode => {
+const RegistrationForm = ({link}: {link?: string | string[]}): ReactElement => {
 
     const { isLoading, isAuth, isError, registration, registrationAdmin } = useUserStore();
 
@@ -77,31 +77,31 @@ const RegistrationForm = ({link}: {link?: string | string[]}): React.ReactNode =
         }
     }
 
-    const sendData = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    const sendData = async (e: React.FormEvent<HTMLFormElement>): Promise<(() => void) | undefined> => {
         e.preventDefault();
         const verificatedName = name.replace(/[^@()а-яёъa-z0-9_\'\:\;\- ]/ig, "").trim();
         setName(verificatedName);
         if (verificatedName.length === 0 || verificatedName.length < 2 || verificatedName.length > 32) {
             setErrorName(true);
-            setTimeout(() => setErrorName(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorName(false), 3000)
+            return () => clearTimeout(timeout); 
         }
         const validateEmail = checkEmail(email);
         if (!validateEmail) {
             setErrorEmail(true);
-            setTimeout(() => setErrorEmail(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorName(false), 3000)
+            return () => clearTimeout(timeout);  
         }
         const validatePassword = checkPasswordLength(password);
         if (!validatePassword) {
             setErrorPassword(true);
-            setTimeout(() => setErrorPassword(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorName(false), 3000)
+            return () => clearTimeout(timeout); 
         }
         if (password !== confirmPassword) {
             setErrorConfirm(true);
-            setTimeout(() => setErrorConfirm(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorName(false), 3000)
+            return () => clearTimeout(timeout); 
         }
         setCaptcha(true);
     }

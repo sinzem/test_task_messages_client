@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, SetStateAction, /* useEffect, */ useState } from "react";
+import { ReactElement, SetStateAction, useState } from "react";
 
 import styles from "./viewingFiles.module.css";
 import Image from "next/image";
@@ -14,7 +14,7 @@ const ViewingFiles = ({
     address: string;
     value: "image" | "text";
     setter: React.Dispatch<SetStateAction<boolean>>;
-}): ReactNode | Promise<ReactNode> => {
+}): ReactElement => {
 
     // const [text, setText] = useState<string>("");
     const [size, setSize] = useState<number>(320);

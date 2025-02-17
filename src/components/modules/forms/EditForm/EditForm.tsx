@@ -1,7 +1,6 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import styles from "./editForm.module.css";
@@ -23,7 +22,7 @@ const EditForm = ({
     action
 }: {
     action: React.Dispatch<React.SetStateAction<boolean>>
-}): React.ReactNode => {
+}): ReactElement => {
 
     const { isLoading, isError, updateUser } = useUserStore();
 
@@ -54,46 +53,44 @@ const EditForm = ({
         }
     }
 
-    const sendData = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    const sendData = async (e: React.FormEvent<HTMLFormElement>): Promise<(() => void) | undefined> => {
         e.preventDefault();
         const verificatedName = name.replace(/[^@()а-яёъa-z0-9_\'\:\;\- ]/ig, "").trim();
         setName(verificatedName);
         if (verificatedName.length === 0 || verificatedName.length < 2 || verificatedName.length > 32) {
             setErrorName(true);
-            setTimeout(() => setErrorName(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorName(false), 5000)
+            return () => clearTimeout(timeout); 
         }
         const validateEmail = checkEmail(email);
         if (!validateEmail) {
             setErrorEmail(true);
-            setTimeout(() => setErrorEmail(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorEmail(false), 5000)
+            return () => clearTimeout(timeout); 
         }
         const validatePassword = checkPasswordLength(password);
         if (!validatePassword) {
             setErrorPassword(true);
-            setTimeout(() => setErrorPassword(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorPassword(false), 5000)
+            return () => clearTimeout(timeout);
         }
         if (password !== confirmPassword) {
             setErrorConfirm(true);
-            setTimeout(() => setErrorConfirm(false), 5000)
-            return; 
+            const timeout = setTimeout(() => setErrorConfirm(false), 5000)
+            return () => clearTimeout(timeout); 
         }
         
         await updateUser({name, email, password})
             .then((user) => {
                 if (user) {
                     setSuccess(true);
-                    setTimeout(() => {
-                        action(false)
-                    }, 3000)
-                } 
-                return
+                    const timeout = setTimeout(() => {action(false)}, 3000)
+                    return () => clearTimeout(timeout); 
+                }; 
             });
     }
 
-    const closeForm = (e: React.MouseEvent<HTMLDivElement>) => {
+    const closeForm = (e: React.MouseEvent<HTMLDivElement>): void => {
         if (e.target === e.currentTarget) {
             action(false);
         }

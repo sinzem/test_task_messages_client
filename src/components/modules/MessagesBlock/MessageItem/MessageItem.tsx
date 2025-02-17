@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Image from "next/image";
 
 import styles from "./messageItem.module.css";
@@ -15,28 +15,63 @@ import LineMessage from "@/components/ui/popups/LineMessage/LineMessage";
 import MessageService from "@/libs/services/MessageService";
 import CommentsBlock from "../CommentsBlock/CommentsBlock";
 import { useMessageStore } from "@/libs/store/messageStore";
+import FullScreenMessage from "@/components/ui/popups/FullScreenMessage/FullScreenMessage";
 
 
-const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
+const MessageItem = ({message}: {message: IMessage}): ReactElement => {
 
     const {user} = useUserStore();
-    const {openCommentsCounter, setOpenCommentsCounter} = useMessageStore();
+    const {
+        deleteResult,
+        openCommentsCounter, 
+        cacheNewMessages,
+        cacheDeletedMessages,
+        setOpenCommentsCounter,
+        deleteMessage
+    } = useMessageStore();
 
     const [showImageFile, setShowImageFile] = useState<boolean>(false); 
     const [showTextFile, setShowTextFile] = useState<boolean>(false); 
     const [showWarningAddComment, setShowWarningAddComment] = useState<boolean>(false);
     const [showWarningDelComment, setShowWarningDelComment] = useState<boolean>(false);
-    const [showErrorDelComment, setShowErrorDelComment] = useState<boolean>(false);
 
     const [showCommentForm, setShowCommentForm] = useState<boolean>(false);
     const [showCommentsBlock, setShowCommentsBlock] = useState<boolean>(false);
-    const [comments, setComments] = useState<IMessage[] | null>(null);
+    const [comments, setComments] = useState<IMessage[]>([]);
 
-    function showImage() {
+    useEffect(() => {
+        if (cacheNewMessages.length) {
+            cacheNewMessages.forEach(mess => {
+                if (mess.parentMessageId && mess.parentMessageId === message._id) {
+                    message.comments.push(mess._id);
+                    setComments([...comments, mess]);
+                }
+            })
+        }
+    }, [cacheNewMessages])
+
+    useEffect(() => {
+        if (cacheDeletedMessages.length) {
+            cacheDeletedMessages.forEach(mess => {
+                if (message.comments.includes(mess)) {
+                    const index = message.comments.findIndex(index => index === mess);
+                    if (index !== -1) {
+                        message.comments.splice(index, 1);
+                    }
+                }
+                if (comments.length) {
+                    const array = comments.filter(item => item._id !== mess);
+                    setComments(array);
+                }
+            })
+        }
+    }, [cacheDeletedMessages])
+
+    function showImage(): void {
         setShowImageFile(true);
     }
 
-    function showText() {
+    function showText(): void {
         setShowTextFile(true);
     }
 
@@ -52,7 +87,7 @@ const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
         return `${dateObj.slice(0, 8)} в ${dateObj.slice(10)}`;
     } 
 
-    const addComment: () => (() => void) | undefined = () => {
+    const addComment =  (): (() => void) | undefined => {
         if (user && user?.activation) {
             setShowCommentForm(true);
         } else {
@@ -62,14 +97,9 @@ const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
         }
     } 
 
-    const delMessage = async () => {
+    const delMessage = (): (() => void) | undefined => {
         if (user && user.id === message.authId) {
-            await MessageService.deleteMessage(message._id)
-                .then((res) => {
-                    if (res.status !== 200) {
-                        setShowErrorDelComment(true);
-                    }
-                })
+            deleteMessage(message._id);
         } else {
             setShowWarningDelComment(true);
             const timeout = setTimeout(() => {setShowWarningDelComment(false)}, 3000);
@@ -77,7 +107,7 @@ const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
         }
     }
 
-    const openCommentsWindow = async () => {
+    const openCommentsWindow = async (): Promise<void> => {
         await MessageService.getComments(message._id)
             .then((res) => {
                 if (res.status === 200) {
@@ -88,7 +118,7 @@ const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
             });
     }
 
-    const closeCommentsWindow = () => {
+    const closeCommentsWindow = (): void => {
         setShowCommentsBlock(false);
         setOpenCommentsCounter(openCommentsCounter - 1);
     }
@@ -127,8 +157,8 @@ const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
                     {showWarningDelComment && 
                         <LineMessage text="Удалять может только автор сообщения" location="right"/>
                     }
-                    {showErrorDelComment && 
-                        <LineMessage text="Ошибка удаления сообщения" location="right"/>
+                    {deleteResult &&
+                        <FullScreenMessage text={deleteResult} background="backclear" />
                     }
                 </div>
             </div>
@@ -214,7 +244,7 @@ const MessageItem = ({message}: {message: IMessage}): React.JSX.Element => {
                 </div>
             </div>
             <div className={styles.comments_bottom}>
-                {showCommentsBlock && comments &&
+                {showCommentsBlock && comments.length &&
                     <CommentsBlock comments={comments} action={closeCommentsWindow}/>
                 }
             </div>

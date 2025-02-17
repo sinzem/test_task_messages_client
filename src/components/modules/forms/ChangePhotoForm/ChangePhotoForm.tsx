@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
 import styles from "./changePhotoForm.module.css";
 
@@ -12,9 +12,9 @@ const ChangePhotoForm = ({
     action
 }: {
     action: React.Dispatch<React.SetStateAction<boolean>>;
-}): ReactNode | Promise<ReactNode> => {
+}): ReactElement => {
 
-    const {user, addUserPhoto} = useUserStore();
+    const {addUserPhoto} = useUserStore();
     const [hideForm, setHideForm] = useState<boolean>(false);
     const [showResultMessage, setShowResultMessage] = useState<string | null>(null);
     const [image, setImage] = useState<File | null>(null);
@@ -38,7 +38,7 @@ const ChangePhotoForm = ({
         }
     }, [image]);
 
-    const closeForm = (e: React.MouseEvent<HTMLDivElement>) => {
+    const closeForm = (e: React.MouseEvent<HTMLDivElement>): void | (() => void) => {
         if (e.target === e.currentTarget) {
             setHideForm(true);
             const timeout = setTimeout(() => {action(false)}, 500);
@@ -48,25 +48,23 @@ const ChangePhotoForm = ({
         }
     }
 
-    if (user) {
-        return (
-            <div className={`${styles.wrapper} ${hideForm ? styles.hide : styles.not_hide}`}>
-              
-                <div className={styles.popup}>
-                <div className={styles.close} onClick={closeForm}>X</div>
-                    <ImageUploader 
-                        value="image"
-                        title="Фото профиля"
-                        subtitle="Перетяните фото сюда"
-                        setFile={setImage}    
-                    />
-                    {showResultMessage && 
-                        <FullScreenMessage text={showResultMessage} value="success"/>
-                    }
-                </div> 
-            </div>
-        )
-    }
+    return (
+        <div className={`${styles.wrapper} ${hideForm ? styles.hide : styles.not_hide}`}>
+            
+            <div className={styles.popup}>
+            <div className={styles.close} onClick={closeForm}>X</div>
+                <ImageUploader 
+                    value="image"
+                    title="Фото профиля"
+                    subtitle="Перетяните фото сюда"
+                    setFile={setImage}    
+                />
+                {showResultMessage && 
+                    <FullScreenMessage text={showResultMessage} value="success"/>
+                }
+            </div> 
+        </div>
+    )
 };
 
 export default ChangePhotoForm;

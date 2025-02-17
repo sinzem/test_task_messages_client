@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import * as sanitizeHtml from 'sanitize-html';
 
 import styles from "./insertInput.module.css";
@@ -13,7 +13,7 @@ const InsertInput = ({
     sign: string | null,
     closeAction: React.Dispatch<React.SetStateAction<string | null>>,
     setAction: React.Dispatch<React.SetStateAction<string | null>> 
-}): ReactNode => {
+}): ReactElement => {
 
     const [value, setValue] = useState<string>("");
     const areaRef = useRef<HTMLTextAreaElement>(null);

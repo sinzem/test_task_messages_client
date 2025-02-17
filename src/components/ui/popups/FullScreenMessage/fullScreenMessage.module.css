@@ -1,5 +1,5 @@
 .wrap {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     /* display: flex;
@@ -8,10 +8,17 @@
     width: 100%;
     height: 100%;
     color: black; 
-    background-color: rgba(0, 0, 0, .2);
     border-radius: 20px;
     z-index: 20;
     animation: show_message 3s ease forwards;
+}
+
+.backdark {
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.backclear {
+    background-color: transparent;
 }
 
 .message {

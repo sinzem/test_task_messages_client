@@ -1,11 +1,9 @@
-import { ReactNode } from "react";
-
 import styles from "./loginPage.module.css";
 
 import LoginForm from "@/components/modules/forms/LoginForm/LoginForm";
 
 
-const LoginPage = (): ReactNode => {
+const LoginPage: React.FC = () => {
     return (
         <div className={styles.main}>
             <div className={styles.form_wrap}>

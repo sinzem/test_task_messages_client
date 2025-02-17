@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 
 import styles from "./actionButton.module.css";
 
@@ -14,7 +14,7 @@ const ActionButton = ({
     size?: "small" | "middle" | "big",
     action?: (e: React.MouseEvent<HTMLButtonElement>) => void,
     disabled?: boolean
-}): ReactNode | Promise<ReactNode> => {
+}): ReactElement => {
     return (
         <button 
             disabled={disabled} 

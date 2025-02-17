@@ -1,13 +1,9 @@
-// import { AxiosResponse } from "../types/axios/axios";
 import axios, { type AxiosResponse } from "axios";
 
 import $api from "../http";
 import { IUpdateUserDto, IUser } from "../types/IUser";
 
 export default class UserService {
-    static fetchUsers() /* :Promise<AxiosResponse<IUser[]>> */ {
-        return $api.get<IUser[]>("/users");
-    }
 
     static fetchUser(id: string): Promise<AxiosResponse<{user :IUser}>>  {
         try {

@@ -1,7 +1,6 @@
 "use client"
 
-import type React from "react";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from "react-simple-captcha";
 
 import styles from "./captcha.module.css";
@@ -18,7 +17,7 @@ const Captcha = ({
     isValid: boolean | null;
     setIsValid: React.Dispatch<React.SetStateAction<boolean | null>>;
     setCaptcha: React.Dispatch<React.SetStateAction<boolean>>;
-}): ReactNode => {
+}): ReactElement => {
 
     const [userCaptcha, setUserCaptcha] = useState("");
     const [hideCaptcha, setHideCaptcha] = useState<boolean>(false);
@@ -40,33 +39,37 @@ const Captcha = ({
         loadCaptchaEnginge(length, back, front, "");
     }, [])
 
-    const handleSubmit = () => {
+    const handleSubmit = (): (() => void) => {
         const isHuman = validateCaptcha(userCaptcha)
         setIsValid(isHuman)
         if (isHuman) {
             setUserCaptcha("");
-            setTimeout(() => {setHideCaptcha(true)}, 1000);
+            const timeout = setTimeout(() => {setHideCaptcha(true)}, 1000);
+            return () => clearTimeout(timeout);
         } else {
             setUserCaptcha("");
-            setTimeout(() => {
+            const timeout = setTimeout(() => {
                 const {length, back, front} = getValuesForCaptcha();
                 loadCaptchaEnginge(length, back, front, "");
                 setIsValid(null);
             }, 3000);
+            return () => clearTimeout(timeout);
         }
     }
 
-    const closeCaptcha = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const closeCaptcha = (e: React.KeyboardEvent<HTMLDivElement>): void | (() => void) => {
         if (e.key === "Escape") {
             setHideCaptcha(true);
-            setTimeout(() => {setCaptcha(false)}, 1000);
+            const timeout = setTimeout(() => {setCaptcha(false)}, 1000);
+            return () => clearTimeout(timeout);
         }
     }
 
-    const closeCaptchaX = (e: React.MouseEvent<HTMLDivElement>) => {
+    const closeCaptchaX = (e: React.MouseEvent<HTMLDivElement>): void | (() => void) => {
         if (e.target === e.currentTarget) {
             setHideCaptcha(true);
-            setTimeout(() => {setCaptcha(false)}, 1000);
+            const timeout = setTimeout(() => {setCaptcha(false)}, 1000);
+            return () => clearTimeout(timeout);
         }
     }
 
