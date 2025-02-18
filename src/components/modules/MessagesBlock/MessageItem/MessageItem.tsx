@@ -250,19 +250,10 @@ const MessageItem = ({message}: {message: IMessage}): ReactElement => {
                 </div>
             </div>
             {showCommentsBlock && comments.length &&
-                 <div className={styles.comments_bottom}>
-                
-                 
-                     <CommentsBlock comments={comments} action={closeCommentsWindow}/>
-                 
-             </div>
-            }   
-            {/* <div className={styles.comments_bottom}>
-                
-                {showCommentsBlock && comments.length &&
+                <div className={styles.comments_bottom}>
                     <CommentsBlock comments={comments} action={closeCommentsWindow}/>
-                }
-            </div> */}
+                </div>
+            }   
             <div className={styles.big_divider}></div>
         </div>
     );
