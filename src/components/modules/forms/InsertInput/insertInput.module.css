@@ -51,13 +51,14 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    input {
-        padding: 6px 10px;
-        background-color: transparent;
-        border: 1px solid var(--light_gray);
-        border-radius: 14px;
-    }
-    input::placeholder {
-        color: var(--light_gray);
-    }
+}
+
+.input_wrap input {
+    padding: 6px 10px;
+    background-color: transparent;
+    border: 1px solid var(--light_gray);
+    border-radius: 14px;
+}
+.input_wrap input::placeholder {
+    color: var(--light_gray);
 }

@@ -11,14 +11,14 @@
     z-index: 20;
 }
 
-.wrapper pre {
+/* .wrapper pre {
     max-width: 80%;
     max-height: 100vh;
     overflow-y: scroll;
     margin-top: 100px;
     word-break: break-word;
     overflow-wrap: break-word;
-}
+} */
 
 .show {
     animation: appearing .5s ease forwards;
@@ -45,12 +45,13 @@
     bottom: 40px;
     display: flex;
     gap: 20px;
-    button {
-        padding: 4px 12px;
-        font-size: 14px;
-        border: 1px solid var(--light_gray);
-        border-radius: 12px;
-    }
+}
+
+.navigation button {
+    padding: 4px 12px;
+    font-size: 14px;
+    border: 1px solid var(--light_gray);
+    border-radius: 12px;
 }
 
 .frame {
