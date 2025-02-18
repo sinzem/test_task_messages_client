@@ -106,9 +106,9 @@
 .text {
     display: flex;
     align-items: end;
-    a {
-        color: var(--success_green);
-    }
+}
+.text a {
+    color: var(--success_green);
 }
 
 .comments_top {

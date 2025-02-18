@@ -6,18 +6,21 @@
     display: flex;
     gap: 20px;
     position: relative;
-    select {
-        padding: 3px 10px;
-        border: 1px solid var(--light_gray);
-        border-radius: 20px;
-        cursor: pointer;
-        option {
-            background-color: var(--foreground);
-        }
-    }
-    select:focus {
-        border: 1px solid var(--light_gray);
-    }
+}
+
+.search_block select {
+    padding: 3px 10px;
+    border: 1px solid var(--light_gray);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.search_block select option {
+    background-color: var(--foreground);
+}
+
+.search_block select:focus {
+    border: 1px solid var(--light_gray);
 }
 
 
