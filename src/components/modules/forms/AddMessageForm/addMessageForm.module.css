@@ -105,9 +105,10 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    h3 {
-        font-size: 16px;
-    }
+}
+
+.preview h3 {
+    font-size: 16px;
 }
 
 .preview_wrap {
@@ -140,9 +141,10 @@
 .preview_txt {
     word-break: break-word;
     overflow-wrap: break-word;
-    a {
-        color: var(--success_green);
-    }
+}
+
+.preview_txt a {
+    color: var(--success_green);
 }
 
 
