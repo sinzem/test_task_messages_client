@@ -9,11 +9,17 @@ const nextConfig: NextConfig = {
   //     },
   //   ]
   // },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["sinzem.uno", "localhost:3000"]
+    }
+  },
   images: {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "185.237.204.125",
+        hostname: "localhost",
+        // hostname: "185.237.204.125",
         // hostname: "192.168.0.184",
         // hostname: "172.29.80.1",
         // hostname: "172.20.240.1",
