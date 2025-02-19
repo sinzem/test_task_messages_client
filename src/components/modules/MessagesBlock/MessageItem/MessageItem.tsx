@@ -136,7 +136,7 @@ const MessageItem = ({message}: {message: IMessage}): ReactElement => {
                     <div className={styles.photoframe}>
                         {message.authPhoto &&
                             <Image 
-                                src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/files/photo/${message.authPhoto}`}
+                                src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/api/files/photo/${message.authPhoto}`}
                                 alt="Author photo" 
                                 fill={true}
                                 sizes="(max-width: 60px)" 
@@ -190,7 +190,7 @@ const MessageItem = ({message}: {message: IMessage}): ReactElement => {
                     {message.image &&
                         <div className={styles.fileframe} onClick={showImage}>
                             <Image 
-                                src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/files/images/${message.image}`}
+                                src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/api/files/images/${message.image}`}
                                 alt="Image added by the author" 
                                 fill={true}
                                 sizes="(min-width: 100px)" 

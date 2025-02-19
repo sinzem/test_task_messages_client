@@ -95,7 +95,7 @@ const TopPanel = (): ReactElement => {
                     {
                         user.photo &&
                         <Image 
-                            src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/files/photo/${user.photo}`} 
+                            src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/api/files/photo/${user.photo}`} 
                             alt="user photo" 
                             fill={true}
                             sizes="(min-width: 100px)" 

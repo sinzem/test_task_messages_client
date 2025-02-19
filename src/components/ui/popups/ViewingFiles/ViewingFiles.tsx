@@ -56,13 +56,13 @@ const ViewingFiles = ({
                         // <pre>{text}</pre>
                         <iframe 
                             className={styles.text_frame}
-                            src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/files/txt/${address}`} 
+                            src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/api/files/txt/${address}`} 
                         >
                         </iframe>
                     }
                     {value === "image" &&
                         <Image 
-                            src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/files/images/${address}`}
+                            src={`${String(process.env.NEXT_PUBLIC_APP_SERVER_URL)}/api/files/images/${address}`}
                             alt="Image added by the author" 
                             fill={true}
                             sizes="(min-width: 100px)" 
