@@ -13,6 +13,7 @@
     "compressorjs": "^1.2.1",
     "dotenv": "^16.4.7",
     "next": "15.1.5",
+    "ngrok": "^5.0.0-beta.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-simple-captcha": "^9.3.1",
