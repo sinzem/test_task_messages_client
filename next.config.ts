@@ -17,10 +17,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        // protocol: "https",
-        // hostname: "sinzem.uno",
-        protocol: "http",
-        hostname: "localhost",
+        protocol: "https",
+        hostname: "6244-178-150-89-75.ngrok-free.app",
+        // protocol: "http",
+        // hostname: "localhost",
         // hostname: "185.237.204.125",
         // hostname: "192.168.0.184",
         // hostname: "172.29.80.1",
