@@ -143,7 +143,7 @@ const ImageUploader = ({
     )
 }
 
-export default ImageUploader
+export default ImageUploader;
 
 const timeoutClean = (setter: React.Dispatch<React.SetStateAction<string | null>>): (() => void) => {
     const timeout = setTimeout(() => {setter(null)}, 3000);
